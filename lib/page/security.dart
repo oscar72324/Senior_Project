@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class security extends StatelessWidget {
+class Security extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         //drawer: NavigationDrawerWidget(),

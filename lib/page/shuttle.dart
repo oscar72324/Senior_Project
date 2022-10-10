@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class shuttle extends StatelessWidget {
+class Shuttle extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         //drawer: NavigationDrawerWidget(),

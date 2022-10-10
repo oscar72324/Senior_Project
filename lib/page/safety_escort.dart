@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class safetyEscort extends StatelessWidget {
+class SafetyEscort extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(

@@ -104,17 +104,17 @@ class NavigationDrawerWidget extends StatelessWidget {
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => shuttle(),
+          builder: (context) => Shuttle(),
         ));
         break;
       case 1:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => safetyEscort(),
+          builder: (context) => SafetyEscort(),
         ));
         break;
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => security(),
+          builder: (context) => Security(),
         ));
         break;
     }
