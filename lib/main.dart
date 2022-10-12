@@ -17,16 +17,16 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
-  // const MyApp({super.key});
+  const MyApp({super.key});
 
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) => MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: 'CSUN Navigation App',
-    theme: ThemeData(primarySwatch: Colors.red),
-    home: const MyHomePage(title: 'CSUN Navigation App'),
-  );
+        debugShowCheckedModeBanner: false,
+        title: 'CSUN Navigation App',
+        theme: ThemeData(primarySwatch: Colors.red),
+        home: const MyHomePage(title: 'CSUN Navigation App'),
+      );
 }
 
 class MyHomePage extends StatefulWidget {
@@ -38,77 +38,58 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-
 class _MyHomePageState extends State<MyHomePage> {
   late GoogleMapController mapController;
 
   final LatLng _center = const LatLng(34.24138, -118.52946);
 
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
-  /* Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(widget.title),
-        backgroundColor: Colors.red.withOpacity(1.0),
-      ),
-      body: GoogleMap(
-        onMapCreated: _onMapCreated,
-        initialCameraPosition: CameraPosition(
-          target: _center,
-          zoom: 15.0,
-        ),
-      ),
-    );
-  }
-  */
-
-  Widget build(BuildContext context) => Scaffold(
-    // drawer: NavigationDrawerWidget(),
-
-    appBar: AppBar(
-      leading: IconButton(
-        icon: Icon(Icons.person),
-        onPressed: (){
-          if(_scaffoldKey.currentState!.isDrawerOpen){
-            _scaffoldKey.currentState!.closeDrawer();
-          }
-          else{
-            _scaffoldKey.currentState!.openDrawer();
-          }
-        },
+        leading: IconButton(
+          icon: Icon(Icons.person),
+          onPressed: () {
+            if (_scaffoldKey.currentState!.isDrawerOpen) {
+              _scaffoldKey.currentState!.closeDrawer();
+            } else {
+              _scaffoldKey.currentState!.openDrawer();
+            }
+          },
         ),
         title: Text(widget.title),
         backgroundColor: Colors.red,
-    ),
-    drawer: Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.red,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                FlutterLogo(size: 80),
-                Text('Oscar Ibarra'),
-                Text('oscar.ibarra.194@my.csun.edu'),
-              ],
-              )
-            ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    FlutterLogo(size: 80),
+                    Text('Oscar Ibarra'),
+                    Text('oscar.ibarra.194@my.csun.edu'),
+                  ],
+                )),
             ListTile(
               title: Text('Home'),
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, 'main.dart');
               },
-              ),
+            ),
             ListTile(
               title: Text('Leaderboard'),
               onTap: () {
@@ -121,17 +102,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pushNamed(context, '/Settings');
               },
             ),
-        ],
+          ],
         ),
-    ),
-    endDrawer: NavigationDrawerWidget(),
-
-    body: GoogleMap(
-      onMapCreated: _onMapCreated,
+      ),
+      endDrawer: NavigationDrawerWidget(),
+      body: GoogleMap(
+        onMapCreated: _onMapCreated,
         initialCameraPosition: CameraPosition(
           target: _center,
           zoom: 15.0,
         ),
-    ),
-  );
+      ),
+    ));
+  }
 }
