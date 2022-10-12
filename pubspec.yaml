@@ -38,6 +38,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_maps_flutter: ^2.2.1
   sliding_up_panel: ^2.0.0+1
+  permission_handler: ^8.3.0
+  location: ^4.2.0
 
 dev_dependencies:
   flutter_test:
