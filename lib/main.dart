@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 //import 'package:sliding_up_panel/sliding_up_panel.dart';
 //import 'widget/button_widget.dart';
-//import 'package:permission_handler/permission_handler.dart';
-//import 'package:location/location.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:location/location.dart';
 import 'widget/navigation_drawer_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -17,7 +17,7 @@ Future main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -55,6 +55,65 @@ class _MyHomePageState extends State<MyHomePage> {
   }*/
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  LocationData? currentLocation;
+  void getCurrentLocation() async{
+    Location location = Location();
+
+    location.getLocation().then(
+      (location){
+        currentLocation = location;
+      },
+    );
+
+    GoogleMapController googleMapController = await _controller.future;
+
+    location.onLocationChanged.listen(
+      (newLoc){
+        currentLocation = newLoc;
+
+        googleMapController.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              zoom: 15.0,
+              target: LatLng(
+                newLoc.latitude!,
+                newLoc.longitude!,
+              ),
+            ),
+          ),
+        );
+
+      setState(() {});
+      },
+    );
+  }
+
+  List<LatLng> polylineCoordinates = [];
+
+  void getPolyPoints() async{
+    PolylinePoints polylinePoints = PolylinePoints();
+
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      "AIzaSyBnRMozHUDAfh2XsbAm_hjKEIIKeUZi-v0",
+      PointLatLng(userLocation.latitude, userLocation.longitude),
+      PointLatLng(destination.latitude, destination.longitude),
+    );
+    if(result.points.isNotEmpty){
+      result.points.forEach(
+        (PointLatLng point) => polylineCoordinates.add(
+          LatLng(point.latitude, point.longitude),
+          ),
+      );
+      setState(() {});
+    }
+  }
+
+  void initState(){
+    getPolyPoints();
+    getCurrentLocation();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,8 +190,16 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         onMapCreated: (mapController){
           _controller.complete(mapController);
-        }
+        },
       ),
+      /*polylines: {
+        Polyline(
+          polylineId: const PolylineId("route"),
+          points: polylineCoordinates,
+          color: const Color(0xFF7B61FF),
+          width: 6,
+          ),
+      },*/
     ));
   }
 }
