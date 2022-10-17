@@ -31,6 +31,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  permission_handler: ^8.3.0
+  location: ^4.2.0
+  flutter_polyline_points: ^1.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -38,8 +41,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_maps_flutter: ^2.2.1
   sliding_up_panel: ^2.0.0+1
-  permission_handler: ^8.3.0
-  location: ^4.2.0
 
 dev_dependencies:
   flutter_test:

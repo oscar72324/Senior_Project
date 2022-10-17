@@ -1,11 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 //import 'package:sliding_up_panel/sliding_up_panel.dart';
 //import 'widget/button_widget.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:location/location.dart';
+//import 'package:permission_handler/permission_handler.dart';
+//import 'package:location/location.dart';
 import 'widget/navigation_drawer_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,13 +43,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late GoogleMapController mapController;
+  //late GoogleMapController mapController;
+  Completer<GoogleMapController> _controller = Completer();
 
   final LatLng _center = const LatLng(34.24138, -118.52946);
+  static const LatLng userLocation = LatLng(34.24138, -118.52946);
+  static const LatLng destination = LatLng(34.24138, -118.52946);
 
-  void _onMapCreated(GoogleMapController controller) {
+  /*void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
-  }
+  }*/
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -108,11 +114,24 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       endDrawer: NavigationDrawerWidget(),
       body: GoogleMap(
-        onMapCreated: _onMapCreated,
+        //onMapCreated: _onMapCreated,
         initialCameraPosition: CameraPosition(
           target: _center,
           zoom: 15.0,
         ),
+        markers: {
+          const Marker(
+            markerId: MarkerId("user"),
+            position: userLocation,
+          ),
+          const Marker(
+            markerId: MarkerId("destination"),
+            position: destination,
+          ),
+        },
+        onMapCreated: (mapController){
+          _controller.complete(mapController);
+        }
       ),
     ));
   }
