@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 //import 'package:sliding_up_panel/sliding_up_panel.dart';
 //import 'widget/button_widget.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:location/location.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'widget/navigation_drawer_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -22,7 +22,7 @@ Future main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+  
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Completer<GoogleMapController> _controller = Completer();
 
   final LatLng _center = const LatLng(34.24138, -118.52946);
-  static const LatLng userLocation = LatLng(34.24138, -118.52946);
+  static const LatLng userLocation = LatLng(36.24138, -118.52946);
   static const LatLng destination = LatLng(34.24138, -118.52946);
 
   /*void _onMapCreated(GoogleMapController controller) {
@@ -55,6 +55,21 @@ class _MyHomePageState extends State<MyHomePage> {
   }*/
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  Future permissionHandler() async{
+    var status = await Permission.location.status;
+    if(status.isGranted){
+      // location permission is granted
+    }
+    else if (status.isDenied){
+      // location permission is not granted
+      status = await Permission.location.request();
+    }
+
+    if(await Permission.location.isPermanentlyDenied){
+      openAppSettings();
+    }
+  }
 
   LocationData? currentLocation;
   void getCurrentLocation() async{
