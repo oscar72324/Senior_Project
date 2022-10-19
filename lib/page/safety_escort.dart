@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 class SafetyEscort extends StatelessWidget {
-  final String _url = '8182879268';
+  final String _call = '8182879268';
   // const SafetyEscort({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -80,8 +80,8 @@ class SafetyEscort extends StatelessWidget {
               padding: const EdgeInsets.only(top: 40),
               child: ElevatedButton(
                 onPressed: () async {
-                  if (await canLaunch(_url)) {
-                    await launch(_url);
+                  if (await canLaunch(_call)) {
+                    await launch(_call);
                   }
                 },
                 // onPressed: () async {
