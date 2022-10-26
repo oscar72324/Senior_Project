@@ -1,18 +1,26 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 // import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 class SafetyEscort extends StatelessWidget {
-  final String _call = '8182879268';
+  final String _phoneNumber = '+18187995482';
   // const SafetyEscort({super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('Call us for a Safety Escort'),
-          centerTitle: true,
-          backgroundColor: Colors.red,
-        ),
+            shape: Border(bottom: BorderSide(color: Colors.black, width: .5)),
+            iconTheme: IconThemeData(color: Colors.white),
+            toolbarHeight: 100,
+            // title: Text('Call us for a Safety Escort'),
+            centerTitle: true,
+            // backgroundColor: Colors.red,
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('img/MatadorRed.psd'),
+                      fit: BoxFit.fill)),
+            )),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -22,7 +30,7 @@ class SafetyEscort extends StatelessWidget {
               padding: const EdgeInsets.only(
                   top: 40, right: 40, left: 40, bottom: 0),
               child: Text(
-                'We provide free personal safety escorts for students, faculty ,staff, and visitors from Monday-Thursday from dusk to 11:00 p.m. during the Fall and Spring semesters. You can request a safety escort by calling 818-677-5042 or 5048, from a campus phone extension 5042 or 5048. ',
+                'Free personal safety escorts for students, faculty, staff, and visitors from Monday-Thursday from dusk to 11:00 p.m. ',
                 style: TextStyle(fontWeight: FontWeight.w700),
                 textAlign: TextAlign.center,
               ),
@@ -47,7 +55,7 @@ class SafetyEscort extends StatelessWidget {
               padding: const EdgeInsets.only(
                   top: 30, left: 40, right: 40, bottom: 10),
               child: Text(
-                'When requesting a Matador Patrol escort, please provide the dispatcher with the following 4 pieces of information:',
+                'Please provide the dispatcher with the following 4 pieces of information:',
                 style: TextStyle(fontWeight: FontWeight.w700),
                 textAlign: TextAlign.center,
               ),
@@ -77,18 +85,31 @@ class SafetyEscort extends StatelessWidget {
               child: Text('4) Your destination'),
             )),
             Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (await canLaunch(_call)) {
-                    await launch(_call);
-                  }
-                },
-                // onPressed: () async {
-                //   await FlutterPhoneDirectCaller.callNumber(
-                //       SupportCallCenterNumber);
-                // },
-                child: Text("Call"),
+              padding: const EdgeInsets.only(top: 60),
+              child: SizedBox(
+                height: 50,
+                width: 100,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                      onPrimary: Colors.white,
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      side: BorderSide(width: 1)),
+                  onPressed: () async {
+                    final _call = 'tel:$_phoneNumber';
+                    final _text = 'sms:$_phoneNumber';
+                    if (await canLaunch(_call)) {
+                      await launch(_call);
+                    }
+                  },
+                  // onPressed: () async {
+                  //   await FlutterPhoneDirectCaller.callNumber(
+                  //       SupportCallCenterNumber);
+                  // },
+                  child: Text("Call"),
+                ),
               ),
             ),
           ],
